@@ -1,40 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Bitnovo Crypto Payment Gateway
 
-## Getting Started
+Este proyecto es una pasarela de pago con criptodivisas desarrollada en un entorno de testnet. Permite a los merchants crear pagos con diferentes criptomonedas y generar un QR para que los clientes realicen la transacción. Se ha desarrollado en **React.js con hooks y Next.js (pages router)**.
 
-First, run the development server:
+## 🚀 Tecnologías utilizadas
+- **React.js**
+- **Next.js (Pages Router)**
+- **WebSockets**
+- **Web3 (para integración con wallets como Metamask)**
+- **Bitnovo API (Testnet)**
+- **TailwindCSS** (para estilos)
+- **Vercel** (para despliegue)
 
-```bash
+## 📌 Características principales
+### 1️⃣ Creación de pagos
+✅ Los merchants pueden crear un pago indicando:
+  - **Importe**
+  - **Concepto**
+  - **Criptodivisa**
+
+### 2️⃣ Pasarela de pago QR
+- Se obtiene la información del pago.
+- Se muestra un **QR** con los datos de la transacción.
+- La pantalla se actualiza en tiempo real.
+
+✅ Manejo de estados:
+- **EX** / **OC**: El pago ha expirado, redirige a una pantalla ❌ KO.
+- **CO** / **AC**: El pago se ha realizado correctamente, redirige a una pantalla ✅ OK.
+
+### 3️⃣ Integración con Web3
+🔹 Se permite la conexión con wallets como **Metamask** para realizar pagos directamente desde la aplicación.
+
+---
+
+## 📖 Instalación y uso
+### 🔧 Requisitos previos
+- Node.js 16+
+- npm o yarn
+```
+2️⃣ Instala las dependencias:
+npm install
+```
+3️⃣ Crea un archivo **.env.local** con la siguiente configuración:
+```sh
+NEXT_PUBLIC_API_BASE_URL
+NEXT_PUBLIC_DEVICE_ID
+NEXT_PUBLIC_WS_URL
+NEXT_PUBLIC_PROJECT_ID
+```
+4️⃣ Inicia el servidor en modo desarrollo:
+```sh
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+5️⃣ Abre en el navegador:
+```sh
+http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## 🚀 Despliegue en Vercel
+El proyecto está desplegado en **Vercel**. Puedes acceder a la versión en vivo en el siguiente enlace:
+https://challenge-bitnovo-seven.vercel.app/
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+---
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+## 🔍 Pruebas de pago
+Puedes utilizar los siguientes recursos para probar los pagos:
+- Web de **XRP testnet** : https://test.xrptoolkit.com/connect-wallet
+- Aplicación de test de **BTC** : https://play.google.com/store/apps/details?id=de.schildbach.wallet_test&hl=en&gl=US
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
