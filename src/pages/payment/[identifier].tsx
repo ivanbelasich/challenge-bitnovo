@@ -96,7 +96,7 @@ const PaymentSummaryPage = () => {
 
         return (
             <>
-                <div className="flex pt-20 justify-center gap-6 h-[579px]">
+                <div className="flex flex-col md:flex-row gap-6 min-h-screen pt-10 md:pt-20 px-4">
                     <PaymentDetails paymentDetails={paymentDetails} />
                     <PaymentActions
                         paymentDetails={paymentDetails}
