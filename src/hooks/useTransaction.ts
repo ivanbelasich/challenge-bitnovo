@@ -1,21 +1,20 @@
 import { useSendTransaction } from 'wagmi';
 import { parseEther } from 'viem';
+import { IPayment } from '@/types/payment';
 
-const useTransaction = (paymentDetails: any) => {
+const useTransaction = (paymentDetails: IPayment) => {
     const { sendTransaction } = useSendTransaction();
 
     const handleSendTransaction = async () => {
-        console.log("holis")
         if (!paymentDetails || !paymentDetails.address) return;
 
-        const to = paymentDetails.address;
+        const to = paymentDetails.address as `0x${string}`;
         const value = parseEther(paymentDetails.crypto_amount.toString());
 
         sendTransaction(
             { to, value },
             {
-                onSuccess: (txHash) => {
-                    console.log('Transacción enviada:', txHash);
+                onSuccess: () => {
                     return 'Transacción enviada correctamente.';
                 },
                 onError: (error) => {

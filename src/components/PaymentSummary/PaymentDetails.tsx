@@ -1,7 +1,8 @@
+import { IPayment } from '@/types/payment';
 import React from 'react';
 
 interface PaymentDetailsProps {
-    paymentDetails: any;
+    paymentDetails: IPayment;
 }
 
 const PaymentDetails: React.FC<PaymentDetailsProps> = ({ paymentDetails }) => (

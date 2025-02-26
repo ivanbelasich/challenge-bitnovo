@@ -6,7 +6,7 @@ import { ICurrency } from '@/types/currency';
 const CreatePayment = () => {
     const [currencies, setCurrencies] = useState<ICurrency[]>([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
         const fetchCurrencies = async () => {
@@ -15,7 +15,7 @@ const CreatePayment = () => {
                 const response = await getCurrencies();
                 setCurrencies(response);
             } catch (error) {
-                setError(error);
+                setError(error as Error);
             } finally {
                 setIsLoading(false);
             }

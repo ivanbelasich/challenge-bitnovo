@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { API_BASE_URL } from '@/constants/api';
+import { API_BASE_URL, DEVICE_ID } from '@/constants/api';
+import { IPayment } from '@/types/payment';
 
 const usePaymentInfo = (identifier: string) => {
-    const [paymentInfo, setPaymentInfo] = useState<any[]>([]);
+    const [paymentInfo, setPaymentInfo] = useState<IPayment[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
         if (!identifier) return;
@@ -16,7 +17,7 @@ const usePaymentInfo = (identifier: string) => {
                     `${API_BASE_URL}/orders/info/${identifier}`,
                     {
                         headers: {
-                            'X-Device-Id': '4ca42f96-c3e7-47c5-803b-d87699552538',
+                            'X-Device-Id': DEVICE_ID,
                         },
                     }
                 );
@@ -27,7 +28,7 @@ const usePaymentInfo = (identifier: string) => {
                     setError(new Error("Respuesta inválida de la API"));
                 }
             } catch (error) {
-                setError(error);
+                setError(error as Error);
             } finally {
                 setIsLoading(false);
             }

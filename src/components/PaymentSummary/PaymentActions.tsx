@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import ConnectWallet from '../../providers';
 import { useAccount, useDisconnect } from 'wagmi';
+import { IPayment } from '@/types/payment';
 
 interface PaymentActionsProps {
-    paymentDetails: any;
+    paymentDetails: IPayment;
     timeLeft: string;
     activeTab: 'smartQR' | 'metaMask';
     setActiveTab: (tab: 'smartQR' | 'metaMask') => void;

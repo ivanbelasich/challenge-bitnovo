@@ -2,7 +2,7 @@ import React from 'react';
 
 interface PaymentStatusModalProps {
     showModal: boolean;
-    isSuccess: boolean;
+    isSuccess: boolean | null;
     closeModal: () => void;
     onSuccessAction?: () => void;
 }
