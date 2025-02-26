@@ -25,12 +25,16 @@ const CreatePayment = () => {
     }, []);
 
     return (
-        <div className="w-[673px] min-h-[530px] rounded-[16px] border border-gray-300 p-8 flex flex-col gap-8 shadow-md">
-            <h1 className="text-title text-darkBlue text-center font-bold">Crear pago</h1>
-            {error && <p className="text-red-500">Error cargando criptodivisas.</p>}
-            {isLoading ?
-                <div className='flex justify-center items-center h-[300px]'> <Spinner />
-                </div> : <PaymentForm currencies={currencies} />}
+        <div className="w-full max-w-[673px] rounded-[16px] border border-gray-300 p-4 flex flex-col shadow-md mx-4">
+            <h1 className="text-lg sm:text-title text-darkBlue text-center font-bold">Crear pago</h1>
+            {error && <p className="text-red-500 text-center">Error cargando criptodivisas.</p>}
+            {isLoading ? (
+                <div className='flex justify-center items-center h-[300px]'>
+                    <Spinner />
+                </div>
+            ) : (
+                <PaymentForm currencies={currencies} />
+            )}
         </div>
     );
 };

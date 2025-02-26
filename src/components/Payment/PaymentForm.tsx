@@ -23,7 +23,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ currencies }) => {
     } = usePaymentForm(currencies);
 
     return (
-        <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} className="space-y-8">
+        <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} className="space-y-8 flex flex-col">
 
             <div>
                 <label className="block mb-1 text-subtitle text-darkBlue font-bold">Importe a pagar:</label>
@@ -31,7 +31,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ currencies }) => {
                     type="number"
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
-                    className="w-[609px] h-[56px] border border-gray rounded-[6px] px-[12px] py-[18px] text-black"
+                    className="w-full h-[56px] border border-gray rounded-md px-3 py-4 text-black"
                     placeholder="Añade importe a pagar"
 
                 />
@@ -39,7 +39,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ currencies }) => {
 
             <div>
                 <label className="block mb-1 text-subtitle text-darkBlue font-bold">Seleccionar moneda:</label>
-                <div className="relative w-[609px]">
+                <div className="relative w-full">
                     {selectedCurrency && (
                         <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
                             <Image
@@ -55,8 +55,8 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ currencies }) => {
                     <select
                         value={selectedCurrency}
                         onChange={(e) => setSelectedCurrency(e.target.value)}
-                        className="w-full h-[56px] border border-gray rounded-[6px] px-[12px] pl-10 py-[18px] text-black 
-               font-sans font-normal text-[14px] leading-[20px] tracking-[0.01em] appearance-none bg-white"
+                        className="w-full h-[56px] border border-gray rounded-md px-3 pl-10 py-4 text-black 
+               font-sans font-normal text-md leading-[20px] tracking-[0.01em] appearance-none bg-white"
 
                     >
                         <option value="" disabled>Selecciona una criptodivisa</option>
@@ -78,7 +78,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ currencies }) => {
                     type="text"
                     value={concept}
                     onChange={(e) => setConcept(e.target.value)}
-                    className="w-[609px] h-[56px] border border-gray rounded-[6px] px-[12px] py-[18px] text-black"
+                    className="w-full h-[56px] border border-gray rounded-md px-3 py-4 text-black"
                     placeholder="Añade descripción del pago"
 
                 />
@@ -88,7 +88,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ currencies }) => {
 
             <button
                 type="submit"
-                className="w-[609px] h-[56px] bg-lightBlue text-white rounded-[6px] flex items-center justify-center px-[12px] py-[18px] disabled:opacity-50"
+                className="w-full h-[56px] bg-lightBlue text-white rounded-md flex items-center justify-center px-3 disabled:opacity-50"
                 disabled={isSubmitting}
             >
                 {isSubmitting ? (
