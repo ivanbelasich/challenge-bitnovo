@@ -4,9 +4,9 @@ import axios from 'axios';
 
 const API_URL = `${API_BASE_URL}/orders/`;
 
-export const createPayment = async (formData: ICreatePaymentRequest): Promise<ICreatePaymentResponse> => {
+export const createPayment = async (paymentRequest: ICreatePaymentRequest): Promise<ICreatePaymentResponse> => {
     try {
-        const { data } = await axios.post(API_URL, formData, {
+        const { data } = await axios.post(API_URL, paymentRequest, {
             headers: {
                 'X-Device-Id': DEVICE_ID,
             },

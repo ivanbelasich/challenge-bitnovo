@@ -1,11 +1,11 @@
 export interface ICreatePaymentRequest {
     expected_output_amount: number;
     input_currency: string;
-    merchant_urlko: string;
-    merchant_urlok: string;
+    merchant_urlko?: string;
+    merchant_urlok?: string;
     merchant_url_standby?: string;
     notes: string;
-    reference: string;
+    reference?: string;
     fiat?: string;
     language?: string;
     tag_memo?: string;
