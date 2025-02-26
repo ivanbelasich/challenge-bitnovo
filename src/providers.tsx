@@ -6,13 +6,11 @@ import { Account } from '@/components/account';
 import { WalletOptions } from '@/components/wallet-options';
 import { config } from '../config';
 
-
 const queryClient = new QueryClient();
 
 function ConnectWallet() {
-    const { isConnected } = useAccount()
-    if (isConnected) return <Account />
-    return <WalletOptions />
+    const { isConnected } = useAccount();
+    return isConnected ? <Account /> : <WalletOptions />;
 }
 
 export default ConnectWallet;
