@@ -85,7 +85,7 @@ const PaymentActions: React.FC<PaymentActionsProps> = ({
 
                 <div className="text-center mt-4">
                     <p>Enviar <strong>{paymentDetails.crypto_amount} {paymentDetails.currency_id}</strong></p>
-                    <p><strong>Referencia:</strong> {paymentDetails.reference}</p>
+                    <p>{paymentDetails.address}</p>
                     {paymentDetails.tag_memo && (
                         <p><strong>Etiqueta de Destino:</strong> {paymentDetails.tag_memo}</p>
                     )}
