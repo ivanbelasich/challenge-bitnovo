@@ -87,7 +87,12 @@ const PaymentActions: React.FC<PaymentActionsProps> = ({
                     <p>Enviar <strong>{paymentDetails.crypto_amount} {paymentDetails.currency_id}</strong></p>
                     <p>{paymentDetails.address}</p>
                     {paymentDetails.tag_memo && (
-                        <p><strong>Etiqueta de Destino:</strong> {paymentDetails.tag_memo}</p>
+                        <div className="mt-2 p-2 bg-red-100 border-l-4 border-red-500 text-red-700">
+                            <p><strong>Etiqueta de Destino:</strong> {paymentDetails.tag_memo}</p>
+                            <p className="text-sm font-semibold">
+                                ⚠️ Si no incluyes esta etiqueta al realizar el pago, podrías perder los fondos.
+                            </p>
+                        </div>
                     )}
                 </div>
             </div>
