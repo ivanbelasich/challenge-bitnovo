@@ -5,26 +5,17 @@ import { useRouter } from 'next/router';
 import usePaymentInfo from '@/hooks/usePaymentInfo';
 import PaymentDetails from '@/components/PaymentSummary/PaymentDetails';
 import PaymentActions from '@/components/PaymentSummary/PaymentActions';
-import PaymentModal from '@/components/PaymentSummary/PaymentModal';
 import { WS_URL } from '@/constants/api';
-
+import Spinner from '@/components/Spinner';
 
 const PaymentSummaryPage = () => {
     const router = useRouter();
     const { identifier } = router.query;
-    const { paymentInfo, setPaymentInfo, isLoading, error } = usePaymentInfo(identifier as string); const [showModal, setShowModal] = useState(false);
-    const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
+    const { paymentInfo, setPaymentInfo, isLoading, error } = usePaymentInfo(identifier as string);
+
     const [timeLeft, setTimeLeft] = useState('');
     const [activeTab, setActiveTab] = useState<'smartQR' | 'metaMask'>('smartQR');
 
-    const closeModal = () => {
-        setShowModal(false);
-    };
-
-    const handleSuccessAction = () => {
-        closeModal();
-        router.push("/");
-    };
 
     useEffect(() => {
         if (!paymentInfo.length) return;
@@ -37,11 +28,9 @@ const PaymentSummaryPage = () => {
                 setPaymentInfo((prev) => [{ ...prev[0], status: data.status }]);
 
                 if (['EX', 'OC'].includes(data.status)) {
-                    setIsSuccess(false);
-                    setShowModal(true);
+                    router.push('/payment/failed');
                 } else if (['CO', 'AC'].includes(data.status)) {
-                    setIsSuccess(true);
-                    setShowModal(true);
+                    router.push('/payment/success');
                 }
             }
         };
@@ -50,9 +39,7 @@ const PaymentSummaryPage = () => {
             console.error('WebSocket error:', error);
         };
 
-        return () => {
-            socket.close();
-        };
+        return () => socket.close();
     }, [paymentInfo, setPaymentInfo, identifier]);
 
     useEffect(() => {
@@ -60,7 +47,7 @@ const PaymentSummaryPage = () => {
 
         const expiredTime = new Date(paymentInfo[0].expired_time).getTime();
         const updateTimer = () => {
-            const now = new Date().getTime();
+            const now = Date.now();
             const difference = expiredTime - now;
 
             if (difference <= 0) {
@@ -80,33 +67,50 @@ const PaymentSummaryPage = () => {
         return () => clearInterval(interval);
     }, [paymentInfo]);
 
+    const renderContent = () => {
+        if (isLoading) {
+            return (
+                <div className="flex justify-center items-center h-screen">
+                    <Spinner />
+                </div>
+            );
+        }
 
-    if (isLoading) return <p>Cargando...</p>;
-    if (error) return <p>Error al cargar la información del pago.</p>;
-    if (!paymentInfo.length) return <p>No se pudo cargar la información del pago.</p>;
+        if (error) {
+            return (
+                <div className="flex justify-center items-center h-screen">
+                    <p className="text-red-500">Error al cargar la información del pago.</p>
+                </div>
+            );
+        }
 
-    const paymentDetails = paymentInfo[0];
+        if (!paymentInfo.length) {
+            return (
+                <div className="flex justify-center items-center h-screen">
+                    <p className="text-gray-500">No se encontraron detalles del pago.</p>
+                </div>
+            );
+        }
 
-    return (
-        <div className="w-full h-screen bg-background text-black">
-            <div className="flex pt-20 justify-center gap-6 h-[579px]">
-                <PaymentDetails paymentDetails={paymentDetails} />
-                <PaymentActions
-                    paymentDetails={paymentDetails}
-                    timeLeft={timeLeft}
-                    activeTab={activeTab}
-                    setActiveTab={setActiveTab}
-                    handleSendTransaction={() => { }}
-                />
-            </div>
-            <PaymentModal
-                showModal={showModal}
-                isSuccess={isSuccess}
-                closeModal={closeModal}
-                onSuccessAction={handleSuccessAction}
-            />
-        </div>
-    );
+        const paymentDetails = paymentInfo[0];
+
+        return (
+            <>
+                <div className="flex pt-20 justify-center gap-6 h-[579px]">
+                    <PaymentDetails paymentDetails={paymentDetails} />
+                    <PaymentActions
+                        paymentDetails={paymentDetails}
+                        timeLeft={timeLeft}
+                        activeTab={activeTab}
+                        setActiveTab={setActiveTab}
+                        handleSendTransaction={() => { }}
+                    />
+                </div>
+            </>
+        );
+    };
+
+    return <div className="w-full h-screen bg-background text-black">{renderContent()}</div>;
 };
 
 export default PaymentSummaryPage;
