@@ -18,14 +18,11 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ currencies }) => {
         availableCurrencies,
         submitError,
         handleSubmit,
-        tagMemo,
-        setTagMemo,
         isSubmitting,
     } = usePaymentForm(currencies);
 
     return (
-        <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} className="space-y-4">
-            {submitError && <p className="text-red-500 mb-4">{submitError}</p>}
+        <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} className="space-y-8">
 
             <div>
                 <label className="block mb-1 text-subtitle text-darkBlue font-bold">Importe a pagar:</label>
@@ -35,7 +32,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ currencies }) => {
                     onChange={(e) => setAmount(e.target.value)}
                     className="w-[609px] h-[56px] border border-gray rounded-[6px] px-[12px] py-[18px] text-black"
                     placeholder="Añade importe a pagar"
-                    required
+
                 />
             </div>
 
@@ -59,7 +56,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ currencies }) => {
                         onChange={(e) => setSelectedCurrency(e.target.value)}
                         className="w-full h-[56px] border border-gray rounded-[6px] px-[12px] pl-10 py-[18px] text-black 
                font-sans font-normal text-[14px] leading-[20px] tracking-[0.01em] appearance-none bg-white"
-                        required
+
                     >
                         <option value="" disabled>Selecciona una criptodivisa</option>
                         {availableCurrencies.map((currency) => (
@@ -68,7 +65,6 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ currencies }) => {
                             </option>
                         ))}
                     </select>
-
                     <div className="absolute text-black right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
                         ▼
                     </div>
@@ -83,22 +79,11 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ currencies }) => {
                     onChange={(e) => setConcept(e.target.value)}
                     className="w-[609px] h-[56px] border border-gray rounded-[6px] px-[12px] py-[18px] text-black"
                     placeholder="Añade descripción del pago"
-                    required
+
                 />
             </div>
 
-            {['XRP', 'XLM', 'ALGO'].includes(selectedCurrency) && (
-                <div>
-                    <label className="block mb-1">TAG/MEMO:</label>
-                    <input
-                        type="text"
-                        value={tagMemo}
-                        onChange={(e) => setTagMemo(e.target.value)}
-                        className="w-[609px] h-[56px] border border-gray-300 rounded-[6px] px-[12px] py-[18px] text-black"
-                        required
-                    />
-                </div>
-            )}
+            {submitError && <p className="text-red-500 mb-4 text-center">{submitError}</p>}
 
             <button
                 type="submit"
