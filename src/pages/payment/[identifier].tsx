@@ -52,6 +52,7 @@ const PaymentSummaryPage = () => {
 
             if (difference <= 0) {
                 setTimeLeft('00:00');
+                router.push('/payment/expired');
                 return;
             }
 

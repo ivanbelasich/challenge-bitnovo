@@ -1,7 +1,6 @@
-import { useRouter } from 'next/router';
+import Link from "next/link";
 
 const PaymentSuccess = () => {
-    const router = useRouter();
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -15,12 +14,14 @@ const PaymentSuccess = () => {
                 <p className="text-gray-600 mt-2">
                     El pago se ha realizado exitosamente.
                 </p>
-                <button
-                    onClick={() => router.push('/')}
-                    className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg"
-                >
-                    Crear nuevo pago
-                </button>
+                <Link href="/">
+                    <button
+
+                        className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg"
+                    >
+                        Crear nuevo pago
+                    </button>
+                </Link>
             </div>
         </div>
     );
