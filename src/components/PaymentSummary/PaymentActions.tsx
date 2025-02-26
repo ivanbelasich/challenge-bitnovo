@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import ConnectWallet from '../../providers';
-import { useAccount, useDisconnect } from 'wagmi';
 import { IPayment } from '@/types/payment';
 
 interface PaymentActionsProps {
@@ -17,10 +16,7 @@ const PaymentActions: React.FC<PaymentActionsProps> = ({
     timeLeft,
     activeTab,
     setActiveTab,
-    handleSendTransaction,
 }) => {
-    const { address, isConnected } = useAccount();
-    const { disconnect } = useDisconnect();
 
     const [copiedField, setCopiedField] = useState('');
 
