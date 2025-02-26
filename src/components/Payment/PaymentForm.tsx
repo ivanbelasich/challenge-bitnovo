@@ -2,6 +2,7 @@ import React from 'react';
 import { usePaymentForm } from '@/hooks/usePaymentForm';
 import { ICurrency } from '@/types/currency';
 import Image from 'next/image';
+import Spinner from '../Spinner';
 
 interface PaymentFormProps {
     currencies: ICurrency[];
@@ -91,7 +92,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ currencies }) => {
                 disabled={isSubmitting}
             >
                 {isSubmitting ? (
-                    <svg className="animate-spin h-5 w-5 mr-2 border-4 border-white border-t-transparent rounded-full" viewBox="0 0 24 24"></svg>
+                    <Spinner />
                 ) : (
                     "Continuar"
                 )}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getCurrencies } from '@/services/currencyService';
 import PaymentForm from '@/components/Payment/PaymentForm';
 import { ICurrency } from '@/types/currency';
+import Spinner from '../Spinner';
 
 const CreatePayment = () => {
     const [currencies, setCurrencies] = useState<ICurrency[]>([]);
@@ -28,7 +29,7 @@ const CreatePayment = () => {
             <h1 className="text-title text-darkBlue text-center font-bold">Crear pago</h1>
             {error && <p className="text-red-500">Error cargando criptodivisas.</p>}
             {isLoading ?
-                <div className='flex justify-center items-center h-[300px]'> <svg className="animate-spin h-5 w-5 mr-2 border-4 border-darkBlue border-t-transparent rounded-full" viewBox="0 0 24 24"></svg>
+                <div className='flex justify-center items-center h-[300px]'> <Spinner />
                 </div> : <PaymentForm currencies={currencies} />}
         </div>
     );
