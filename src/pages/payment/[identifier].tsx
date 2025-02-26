@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import usePaymentInfo from '@/hooks/usePaymentInfo';
-import { useTransaction } from 'wagmi';
 import PaymentDetails from '@/components/PaymentSummary/PaymentDetails';
 import PaymentActions from '@/components/PaymentSummary/PaymentActions';
 import PaymentModal from '@/components/PaymentSummary/PaymentModal';
@@ -17,8 +16,6 @@ const PaymentSummaryPage = () => {
     const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
     const [timeLeft, setTimeLeft] = useState('');
     const [activeTab, setActiveTab] = useState<'smartQR' | 'metaMask'>('smartQR');
-
-    const { handleSendTransaction } = useTransaction(paymentInfo[0]);
 
     const closeModal = () => {
         setShowModal(false);
@@ -35,7 +32,6 @@ const PaymentSummaryPage = () => {
         const socket = new WebSocket(`${WS_URL}/${identifier}`);
         socket.onmessage = (event) => {
             const data = JSON.parse(event.data);
-            console.log(event.data, "mensaje")
 
             if (data.status) {
                 setPaymentInfo((prev) => [{ ...prev[0], status: data.status }]);
@@ -57,7 +53,7 @@ const PaymentSummaryPage = () => {
         return () => {
             socket.close();
         };
-    }, [paymentInfo, identifier]);
+    }, [paymentInfo, setPaymentInfo, identifier]);
 
     useEffect(() => {
         if (!paymentInfo.length) return;
@@ -100,7 +96,7 @@ const PaymentSummaryPage = () => {
                     timeLeft={timeLeft}
                     activeTab={activeTab}
                     setActiveTab={setActiveTab}
-                    handleSendTransaction={handleSendTransaction}
+                    handleSendTransaction={() => { }}
                 />
             </div>
             <PaymentModal
