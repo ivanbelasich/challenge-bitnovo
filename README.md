@@ -34,7 +34,7 @@ Este proyecto es una pasarela de pago con criptodivisas desarrollada en un entor
 
 ## 📖 Instalación y uso
 ### 🔧 Requisitos previos
-- Node.js 16+
+- Node.js 18.8+
 - npm o yarn
 ```
 2️⃣ Instala las dependencias:
