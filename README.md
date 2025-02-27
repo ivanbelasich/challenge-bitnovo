@@ -2,6 +2,13 @@
 
 Este proyecto es una pasarela de pago con criptodivisas desarrollada en un entorno de testnet. Permite a los merchants crear pagos con diferentes criptomonedas y generar un QR para que los clientes realicen la transacción. Se ha desarrollado en **React.js con hooks y Next.js (pages router)**.
 
+## Mejoras y Consideraciones
+Estos son algunos puntos que considero importantes para mejorar el proyecto:
+- Testeo unitario e integración: Implementar pruebas unitarias y de integración para garantizar el correcto funcionamiento de los componentes y la aplicación en su conjunto.
+- Estructura y nomenclatura de archivos: Mejorar la organización del código siguiendo convenciones claras y separando responsabilidades de manera efectiva.
+- Principios SOLID y Clean Architecture: Aplicar estos principios para mejorar la mantenibilidad, escalabilidad y claridad del código.
+- Manejo de errores: Mejorar la captura y gestión de errores para evitar fallos inesperados y proporcionar feedback adecuado al usuario.
+
 ## 🚀 Tecnologías utilizadas
 - **React.js**
 - **Next.js (Pages Router)**
@@ -68,5 +75,6 @@ https://challenge-bitnovo-seven.vercel.app/
 Puedes utilizar los siguientes recursos para probar los pagos:
 - Web de **XRP testnet** : https://test.xrptoolkit.com/connect-wallet
 - Aplicación de test de **BTC** : https://play.google.com/store/apps/details?id=de.schildbach.wallet_test&hl=en&gl=US
+
 
 
