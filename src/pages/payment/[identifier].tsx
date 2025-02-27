@@ -12,8 +12,6 @@ const PaymentSummaryPage = () => {
     const router = useRouter();
     const { identifier } = router.query;
     const { paymentInfo, setPaymentInfo, isLoading, error } = usePaymentInfo(identifier as string);
-
-    const [timeLeft, setTimeLeft] = useState('');
     const [activeTab, setActiveTab] = useState<'smartQR' | 'metaMask'>('smartQR');
 
 
@@ -33,7 +31,6 @@ const PaymentSummaryPage = () => {
                         }
                         return prev;
                     });
-
                     if (['OC'].includes(data.status)) {
                         router.push('/payment/failed');
                     } else if (['EX'].includes(data.status)) {
@@ -57,31 +54,8 @@ const PaymentSummaryPage = () => {
             }
         };
     }, [identifier]);
-    useEffect(() => {
-        if (!paymentInfo.length) return;
 
-        const expiredTime = new Date(paymentInfo[0].expired_time).getTime();
-        const updateTimer = () => {
-            const now = Date.now();
-            const difference = expiredTime - now;
 
-            if (difference <= 0) {
-                setTimeLeft('00:00');
-                router.push('/payment/expired');
-                return;
-            }
-
-            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-            setTimeLeft(`${minutes}:${seconds < 10 ? '0' + seconds : seconds}`);
-        };
-
-        updateTimer();
-        const interval = setInterval(updateTimer, 1000);
-
-        return () => clearInterval(interval);
-    }, [paymentInfo]);
 
     const renderContent = () => {
         if (isLoading) {
@@ -116,7 +90,6 @@ const PaymentSummaryPage = () => {
                     <PaymentDetails paymentDetails={paymentDetails} />
                     <PaymentActions
                         paymentDetails={paymentDetails}
-                        timeLeft={timeLeft}
                         activeTab={activeTab}
                         setActiveTab={setActiveTab}
                         handleSendTransaction={() => { }}
