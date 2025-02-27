@@ -6,7 +6,7 @@ Este proyecto es una pasarela de pago con criptodivisas desarrollada en un entor
 - **React.js**
 - **Next.js (Pages Router)**
 - **WebSockets**
-- **Web3 (para integración con wallets como Metamask)**
+- **Wagmi (para integración con wallets como Metamask)**
 - **Bitnovo API (Testnet)**
 - **TailwindCSS** (para estilos)
 - **Vercel** (para despliegue)
