@@ -17,7 +17,7 @@ export function Account() {
             value: parseEther(paymentDetails.crypto_amount.toString()),
         });
     };
-    console.log({ paymentDetails })
+
     return (
         <div className="flex flex-col items-center w-full max-w-md bg-lightGray p-6 rounded-xl">
             <p className="text-sm w-full md:text-base text-gray-700 font-medium text-center break-words">
