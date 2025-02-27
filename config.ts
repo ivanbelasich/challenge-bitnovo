@@ -1,6 +1,6 @@
 import { PROJECT_ID } from '@/constants/api'
 import { http, createConfig } from 'wagmi'
-import { base, mainnet, optimism } from 'wagmi/chains'
+import { base, mainnet } from 'wagmi/chains'
 import { injected, metaMask, safe, walletConnect } from 'wagmi/connectors'
 
 const projectId = PROJECT_ID as string;

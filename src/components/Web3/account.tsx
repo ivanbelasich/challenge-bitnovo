@@ -3,9 +3,9 @@ import { useAccount, useDisconnect } from 'wagmi';
 export function Account() {
     const { address } = useAccount();
     const { disconnect } = useDisconnect();
-
     return (
         <div className="text-center">
+
             <p className="text-sm md:text-base break-words">
                 Cuenta conectada: <strong>{address}</strong>
             </p>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import ConnectWallet from '../../providers';
 import { IPayment } from '@/types/payment';
+import { ConnectWallet } from '../Web3/connect-wallet';
 
 interface PaymentActionsProps {
     paymentDetails: IPayment;
@@ -19,7 +19,6 @@ const PaymentActions: React.FC<PaymentActionsProps> = ({
 }) => {
 
     const [copiedField, setCopiedField] = useState('');
-
     const handleCopy = (text: string, field: string) => {
         navigator.clipboard.writeText(text);
         setCopiedField(field);
