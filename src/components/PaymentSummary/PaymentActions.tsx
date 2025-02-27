@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { IPayment } from '@/types/payment';
 import { ConnectWallet } from '../Web3/connect-wallet';
 import CountdownTimer from '../CountdownTimer';
+import { usePaymentContext } from '@/context/PaymentContext';
 
 interface PaymentActionsProps {
     paymentDetails: IPayment;
     activeTab: 'smartQR' | 'metaMask';
     setActiveTab: (tab: 'smartQR' | 'metaMask') => void;
-    handleSendTransaction: () => void;
 }
 
 const PaymentActions: React.FC<PaymentActionsProps> = ({
@@ -16,6 +16,12 @@ const PaymentActions: React.FC<PaymentActionsProps> = ({
     activeTab,
     setActiveTab,
 }) => {
+
+    const { setPaymentDetails } = usePaymentContext();
+
+    useEffect(() => {
+        setPaymentDetails(paymentDetails);
+    }, [paymentDetails, setPaymentDetails]);
 
     const [copiedField, setCopiedField] = useState('');
     const handleCopy = (text: string, field: string) => {
@@ -29,7 +35,7 @@ const PaymentActions: React.FC<PaymentActionsProps> = ({
     </svg>
 
     return (
-        <div className="flex flex-col text-darkBlue w-full px-4 md:px-0">
+        <div className="flex flex-col text-darkBlue w-full h-full mb-10 px-4 md:px-0">
             <h2 className="text-lg md:text-xl font-bold mb-4 text-center">Realiza el Pago</h2>
             <div className="bg-white w-full max-w-lg p-4 md:p-6 rounded-2xl shadow-md mx-auto">
                 <p className="flex justify-center items-center gap-2 text-sm md:text-base">
@@ -55,56 +61,57 @@ const PaymentActions: React.FC<PaymentActionsProps> = ({
                 </div>
 
                 {activeTab === 'smartQR' ? (
-                    <div className="flex justify-center">
-                        <Image
-                            src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${paymentDetails.address}`}
-                            alt="SmartQR"
-                            width={150}
-                            height={150}
-                        />
+                    <div>
+                        <div className="flex justify-center">
+                            <Image
+                                src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${paymentDetails.address}`}
+                                alt="SmartQR"
+                                width={150}
+                                height={150}
+                            />
+                        </div>
+                        <div className="text-center mt-4 text-sm md:text-base space-y-2">
+                            <div className="flex items-center justify-center gap-2">
+                                <p>
+                                    Enviar <strong>{paymentDetails.crypto_amount} {paymentDetails.currency_id}</strong>
+                                </p>
+                                <button onClick={() => handleCopy(paymentDetails.crypto_amount.toString(), 'amount')}>
+                                    {copyButton}
+                                </button>
+                                {copiedField === 'amount' && <span className="text-green-500 text-sm">Copiado!</span>}
+                            </div>
+
+                            <div className="flex items-center justify-center gap-2">
+                                <p className="break-words overflow-hidden">{paymentDetails.address}</p>
+                                <button onClick={() => handleCopy(paymentDetails.address, 'address')}>
+                                    {copyButton}
+                                </button>
+                                {copiedField === 'address' && <span className="text-green-500 text-sm">Copiado!</span>}
+                            </div>
+
+                            {paymentDetails.tag_memo && (
+                                <div className="mt-2 p-2 bg-red-100 border-l-4 border-red-500 text-red-700">
+                                    <div className="flex items-center justify-between">
+                                        <p>
+                                            <strong>Etiqueta de Destino:</strong> {paymentDetails.tag_memo}
+                                        </p>
+                                        <button onClick={() => handleCopy(paymentDetails.tag_memo || '', 'tagMemo')}>
+                                            {copyButton}
+                                        </button>
+                                    </div>
+                                    {copiedField === 'tagMemo' && <span className="text-green-500 text-sm">Copiado!</span>}
+                                    <p className="font-semibold mt-2">
+                                        ⚠️ Si no incluyes esta etiqueta al realizar el pago, podrías perder los fondos.
+                                    </p>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 ) : (
                     <div className="flex flex-col space-y-2 md:space-y-4">
                         <ConnectWallet />
                     </div>
                 )}
-
-                <div className="text-center mt-4 text-sm md:text-base space-y-2">
-                    <div className="flex items-center justify-center gap-2">
-                        <p>
-                            Enviar <strong>{paymentDetails.crypto_amount} {paymentDetails.currency_id}</strong>
-                        </p>
-                        <button onClick={() => handleCopy(paymentDetails.crypto_amount.toString(), 'amount')}>
-                            {copyButton}
-                        </button>
-                        {copiedField === 'amount' && <span className="text-green-500 text-sm">Copiado!</span>}
-                    </div>
-
-                    <div className="flex items-center justify-center gap-2">
-                        <p className="break-words overflow-hidden">{paymentDetails.address}</p>
-                        <button onClick={() => handleCopy(paymentDetails.address, 'address')}>
-                            {copyButton}
-                        </button>
-                        {copiedField === 'address' && <span className="text-green-500 text-sm">Copiado!</span>}
-                    </div>
-
-                    {paymentDetails.tag_memo && (
-                        <div className="mt-2 p-2 bg-red-100 border-l-4 border-red-500 text-red-700">
-                            <div className="flex items-center justify-between">
-                                <p>
-                                    <strong>Etiqueta de Destino:</strong> {paymentDetails.tag_memo}
-                                </p>
-                                <button onClick={() => handleCopy(paymentDetails.tag_memo || '', 'tagMemo')}>
-                                    {copyButton}
-                                </button>
-                            </div>
-                            {copiedField === 'tagMemo' && <span className="text-green-500 text-sm">Copiado!</span>}
-                            <p className="font-semibold mt-2">
-                                ⚠️ Si no incluyes esta etiqueta al realizar el pago, podrías perder los fondos.
-                            </p>
-                        </div>
-                    )}
-                </div>
             </div>
         </div>
     );
