@@ -6,7 +6,7 @@ interface PaymentDetailsProps {
 }
 
 const PaymentDetails: React.FC<PaymentDetailsProps> = ({ paymentDetails }) => (
-    <div className="flex flex-col items-center text-darkBlue bg-background w-full px-4 md:px-0">
+    <div className="flex flex-col items-center text-darkBlue w-full h-full px-4 md:px-0">
         <h2 className="text-lg md:text-xl font-bold mb-4">Resumen del Pedido</h2>
         <div className="bg-lightGray w-full max-w-md md:max-w-lg p-4 md:p-6 rounded-2xl">
             <div className="space-y-4 md:space-y-6 text-sm md:text-base">

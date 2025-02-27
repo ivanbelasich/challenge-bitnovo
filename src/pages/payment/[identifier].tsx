@@ -86,20 +86,19 @@ const PaymentSummaryPage = () => {
 
         return (
             <>
-                <div className="flex flex-col md:flex-row gap-6 min-h-screen pt-10 md:pt-20 px-4">
+                <div className="flex flex-col min-h-screen md:flex-row gap-6 pt-10 md:pt-20 px-4 bg-background">
                     <PaymentDetails paymentDetails={paymentDetails} />
                     <PaymentActions
                         paymentDetails={paymentDetails}
                         activeTab={activeTab}
                         setActiveTab={setActiveTab}
-                        handleSendTransaction={() => { }}
                     />
                 </div>
             </>
         );
     };
 
-    return <div className="w-full h-screen bg-background text-black">{renderContent()}</div>;
+    return <div className="w-full bg-background text-black">{renderContent()}</div>;
 };
 
 export default PaymentSummaryPage;
