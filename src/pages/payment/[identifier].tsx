@@ -18,20 +18,32 @@ const PaymentSummaryPage = () => {
 
 
     useEffect(() => {
-        if (!paymentInfo.length) return;
+        if (!identifier) return;
 
         const socket = new WebSocket(`${WS_URL}/${identifier}`);
+
         socket.onmessage = (event) => {
-            const data = JSON.parse(event.data);
+            try {
+                const data = JSON.parse(event.data);
 
-            if (data.status) {
-                setPaymentInfo((prev) => [{ ...prev[0], status: data.status }]);
+                if (data && data.status) {
+                    setPaymentInfo((prev) => {
+                        if (prev.length) {
+                            return [{ ...prev[0], status: data.status }];
+                        }
+                        return prev;
+                    });
 
-                if (['EX', 'OC'].includes(data.status)) {
-                    router.push('/payment/failed');
-                } else if (['CO', 'AC'].includes(data.status)) {
-                    router.push('/payment/success');
+                    if (['OC'].includes(data.status)) {
+                        router.push('/payment/failed');
+                    } else if (['EX'].includes(data.status)) {
+                        router.push('/payment/expired');
+                    } else if (['CO', 'AC'].includes(data.status)) {
+                        router.push('/payment/success');
+                    }
                 }
+            } catch (error) {
+                console.error('Error parsing WebSocket message:', error);
             }
         };
 
@@ -39,9 +51,12 @@ const PaymentSummaryPage = () => {
             console.error('WebSocket error:', error);
         };
 
-        return () => socket.close();
-    }, [paymentInfo, setPaymentInfo, identifier]);
-
+        return () => {
+            if (socket.readyState === WebSocket.OPEN) {
+                socket.close();
+            }
+        };
+    }, [identifier]);
     useEffect(() => {
         if (!paymentInfo.length) return;
 
